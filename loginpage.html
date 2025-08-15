@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page
+    </title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        body{
+            background-image:url("OIP.webp");
+            
+            background-size: cover;
+            background-size: 100%;
+            color: white;
+        }
+        section{
+            display: grid;
+            place-items: center;
+            justify-content: center;
+            margin-top: 160px;
+        }
+        .maindiv{
+            background-color:transparent;
+           
+          box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            height: 400px;
+            width: 500px;
+            
+        }
+        .heading{
+            text-align: center;
+            font-size: 24px;
+            padding: 10px;
+            
+        }
+        .details{
+        margin-top: 20px;
+          padding-left: 10px;
+          
+          
+
+        }
+       label{
+        font-size: 18px;
+        
+       }
+       input{
+        height: 30px;
+        width: 450px;
+        background-color: transparent;
+        color: white;
+        padding-left:20px ;
+       }
+       #number{
+         margin: 10px;
+       }
+       #password{
+        margin: 10px;
+       }
+       .submitDiv{
+        margin: 30px;
+
+       }
+
+       button{
+        padding:10px;
+        background-color: transparent;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+     border: none;
+     color: white;
+       }
+
+
+
+    </style>
+</head>
+<body>
+    <section>
+        <div class="maindiv">
+            <div class="heading">
+                <h1>Login</h1>
+            </div>
+            <div class="details">
+                  <label for="addhar" class="enterpass">Enter Your Addhar Number:</label>
+                <div id="number"><input type="text" class="addhar"></div>
+                <label for="password">Enter Password:</label>
+                <div id="password"><input type="password"class="password"></div>
+
+            </div>
+            <div class="submitDiv">
+            <button class="submit">Submit</button>
+            </div>
+
+            
+        </div>
+    </section>
+
+    <script>
+        let addharnum=document.querySelector(".addhar")
+        let pass=document.querySelector(".password")
+        let btn=document.querySelector(".submit")
+  const  openfile=()=>{
+    let number=addharnum.value;
+    let password=pass.value;
+    password.type="text";
+    if((number == "357621673033")&&(password=="12345")){
+        window.open("http://127.0.0.1:5500/expensetracker/index.html")
+
+    }
+    else if((number=="")||(password=="")){
+        alert("Fill all the details")
+    }
+    else{
+        alert("Incorrect details")
+    }
+    addharnum.value="";
+    pass.value=""
+  }
+     
+
+    btn.addEventListener('click',openfile)
+
+
+    </script>
+</body>
+</html>

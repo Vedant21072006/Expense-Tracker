@@ -1,0 +1,149 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    background-image: linear-gradient(to right,rgb(82, 61, 61),rgb(69, 69, 159));
+}
+section{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding-top: 100px;
+}
+.heading{
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    
+}
+#heading1{
+    font-size: 40px;
+    color:gray;
+    text-align: center;
+    
+    
+}
+h3{
+    color:gray;
+    font-size: 24px;
+    padding: 2px;
+}
+.details{
+    background-color: aliceblue;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    padding: 50px;
+    margin-top: 30px;
+    text-align: center;
+    
+}
+.expenses{
+    background-color: aliceblue;
+    margin-top:10px ;
+    padding: 10px 40px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+
+}
+input{
+    height: 40px;
+    margin:10px ;
+    padding-left: 10px;
+    border-color: gray;
+    color:gray;
+    background-color:rgb(213, 213, 252);
+}
+button{
+      padding: 5px;
+      font-weight: 700;
+      background-image: linear-gradient(to right,rgb(82, 61, 61),rgb(69, 69, 159));
+      color:white;
+      border: none;
+      border-radius: 6px;
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      -ms-border-radius: 6px;
+      -o-border-radius: 6px;
+}
+button:hover{
+      background-image: linear-gradient(to right,rgb(69, 69, 159),rgb(82, 61, 61));
+}
+  
+
+.expenselist{
+    margin-top: 10px;
+    background-color: aliceblue;
+    height: 100%;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+.summary{
+    margin-top: 10px;
+    color:gray;
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+.totalexpenses{
+margin-right: 190px;
+}
+.d1{
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+& p{
+    color:gray;
+}
+}
+.d2{
+    padding: 15px;
+    & p{
+           font-size: 18px;
+           font-weight: 80;
+           color: gray;
+     }
+}
+.d3{
+    padding: 15px;
+    & p{
+        font-size: 18px;
+        text-align: center;
+        color: red;
+        font-weight: 700;
+    
+    }
+}
+.d4{
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+    
+    & button{
+        font-size: 18px;
+        text-align: right;
+        
+       
+       
+    }
+
+    
+}

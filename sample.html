@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Complete Expense Tracker & Account Dashboard</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    background: #eef3f7;
+    padding: 20px;
+    color: #2c3e50;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 35px;
+  }
+
+  .account-card {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 18px rgb(0 0 0 / 0.1);
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .account-details p {
+    font-size: 18px;
+    margin: 6px 0;
+  }
+  .account-details span {
+    font-weight: 700;
+    color: #34495e;
+  }
+
+  .input-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+  }
+  input[type="text"], input[type="number"] {
+    flex: 1;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+  input[type="text"]:focus, input[type="number"]:focus {
+    outline: none;
+    border-color: #2980b9;
+    background-color: #eaf4fb;
+  }
+  button.add-expense-btn {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  button.add-expense-btn:hover {
+    background-color: #1c5980;
+  }
+
+  .expenses-list {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 0.1);
+    padding: 15px;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+  }
+  .expense-item:last-child {
+    border-bottom: none;
+  }
+  .expense-desc {
+    font-weight: 600;
+    color: #34495e;
+  }
+  .expense-amount {
+    font-weight: 700;
+    color: #e74c3c;
+    margin-right: 15px;
+  }
+  button.delete-btn {
+    background-color: transparent;
+    border: none;
+    color: #e74c3c;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  button.delete-btn:hover {
+    color: #c0392b;
+  }
+
+  .summary {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  .balance-positive {
+    color: #27ae60;
+  }
+  .balance-negative {
+    color: #e74c3c;
+  }
+
+  @media (max-width: 620px) {
+    body {
+      margin: 20px 10px;
+      max-width: 100%;
+    }
+    .input-group {
+      flex-direction: column;
+    }
+    button.add-expense-btn {
+      width: 100%;
+      padding: 12px 0;
+    }
+    .summary {
+      flex-direction: column;
+      gap: 8px;
+      font-size: 18px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Complete Expense Tracker</h1>
+
+  <div class="account-card">
+    <div class="account-details">
+      <p>Name: <span id="account-name">Vedant Rathod</span></p>
+      <p>Account Number: <span id="account-number">1234567890123456</span></p>
+      <p>Current Balance: ₹<span id="account-balance">50000.00</span></p>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <input type="text" class="desc-input" placeholder="Expense description" />
+    <input type="number" class="amount-input" placeholder="Amount (₹)" />
+    <button class="add-expense-btn">Add Expense</button>
+  </div>
+
+  <div class="expenses-list"></div>
+
+  <div class="summary">
+    <div>Total Expenses: ₹<span id="total-expenses">0.00</span></div>
+    <div>Remaining Balance: ₹<span id="remaining-balance" class="balance-positive">0.00</span></div>
+  </div>
+
+<script>
+  // Elements
+  const descInput = document.querySelector('.desc-input');
+  const amountInput = document.querySelector('.amount-input');
+  const addBtn = document.querySelector('.add-expense-btn');
+  const expensesList = document.querySelector('.expenses-list');
+  const totalExpensesDisplay = document.getElementById('total-expenses');
+  const remainingBalanceDisplay = document.getElementById('remaining-balance');
+  const accountBalanceDisplay = document.getElementById('account-balance');
+
+  // Account data with balance
+  const accountData = {
+    name: 'Vedant Rathod',
+    accountNumber: '1234567890123456',
+    balance: 50000.00,  // Initial balance, will update dynamically
+  };
+
+  // Display account info
+  document.getElementById('account-name').textContent = accountData.name;
+  document.getElementById('account-number').textContent = accountData.accountNumber;
+  accountBalanceDisplay.textContent = accountData.balance.toFixed(2);
+
+  // Load expenses from localStorage or empty
+  let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+  // Save expenses to localStorage
+  function updateLocalStorage() {
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+  }
+
+  // Calculate total expenses
+  function calculateTotalExpenses() {
+    return expenses.reduce((sum, exp) => sum + exp.amount, 0);
+  }
+
+  // Update balance summary
+  function updateSummary() {
+    const totalExpenses = calculateTotalExpenses();
+    totalExpensesDisplay.textContent = totalExpenses.toFixed(2);
+
+    const remainingBalance = accountData.balance - totalExpenses;
+    remainingBalanceDisplay.textContent = remainingBalance.toFixed(2);
+
+    // Update current balance display to reflect remaining balance
+    accountBalanceDisplay.textContent = remainingBalance.toFixed(2);
+
+    if (remainingBalance < 0) {
+      remainingBalanceDisplay.classList.remove('balance-positive');
+      remainingBalanceDisplay.classList.add('balance-negative');
+    } else {
+      remainingBalanceDisplay.classList.remove('balance-negative');
+      remainingBalanceDisplay.classList.add('balance-positive');
+    }
+  }
+
+  // Create expense item element
+  function createExpenseItem(expense, index) {
+    const div = document.createElement('div');
+    div.classList.add('expense-item');
+
+    const desc = document.createElement('span');
+    desc.classList.add('expense-desc');
+    desc.textContent = expense.description;
+
+    const amount = document.createElement('span');
+    amount.classList.add('expense-amount');
+    amount.textContent = `₹${expense.amount.toFixed(2)}`;
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.innerHTML = '&times;'; // × symbol
+
+    deleteBtn.addEventListener('click', () => {
+      expenses.splice(index, 1);
+      updateLocalStorage();
+      renderExpenses();
+      updateSummary();
+    });
+
+    div.appendChild(desc);
+    div.appendChild(amount);
+    div.appendChild(deleteBtn);
+
+    return div;
+  }
+
+  // Render expenses list
+  function renderExpenses() {
+    expensesList.innerHTML = '';
+    expenses.forEach((expense, idx) => {
+      expensesList.appendChild(createExpenseItem(expense, idx));
+    });
+  }
+
+  // Add new expense
+  function addExpense() {
+    const description = descInput.value.trim();
+    const amount = parseFloat(amountInput.value);
+
+    if (description === '' || isNaN(amount) || amount <= 0) {
+      alert('Please enter a valid description and amount greater than 0.');
+      return;
+    }
+
+    expenses.push({ description, amount });
+    updateLocalStorage();
+    renderExpenses();
+    updateSummary();
+
+    descInput.value = '';
+    amountInput.value = '';
+    descInput.focus();
+  }
+
+  // Event listeners
+  addBtn.addEventListener('click', addExpense);
+  [descInput, amountInput].forEach(input => {
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') addExpense();
+    });
+  });
+
+  // Initial render
+  renderExpenses();
+  updateSummary();
+</script>
+
+</body>
+</html>
+
+
+

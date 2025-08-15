@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense-Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section>
+    <div class="mainDiv">
+    <!-- ========== heading ========== -->
+        <div class="heading">
+            <h1 id="heading1">Complete Expense  Tracker</h1>
+        </div>
+
+
+        <!-- details -->
+        <div class="details">
+         <h3>Name:<b>Vedant Rathod</b></h3>
+         <h3>Account Number: 123456784567</h3>
+         <h3 class="currentbalance"></h3>
+        </div>
+
+            <!--Expenses-->
+          <div class="expenses">
+          
+                <input type="text" placeholder="Expense description" class="expensedescription">
+                <input type="number" placeholder="Amount ($)" class="amount">
+                <button class="btn">Add<br/>Expense</button>
+          </div>
+
+
+
+         <!-- expense list-->
+        <div class="expenselist"></div>
+
+
+
+        <div class="summary">
+            <p class="totalexpenses" style="display: inline-block;">
+              Total Expenses:$0.00 
+            </p>
+            <p class="remainingbalance" style="display: inline-block;">
+                Remaining Balance:$50000
+            </p>
+        </div>
+    </div>
+
+    <script src="javascript.js"></script>
+
+  </section>
+</body>
+</html>
